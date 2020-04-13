@@ -1,13 +1,18 @@
+import * as env from 'dotenv';
 import * as express from 'express';
 import Stripe from 'stripe';
+
+env.config();
+
 
 const router = express.Router();
 
 
-const stripe = new Stripe('sk_test_EtTySaMNpFDHo6UqgA5nbOKM00x1yRjY6v', {
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
     apiVersion: "2020-03-02",
     typescript: true
-  });
+});
 
 const charge = (token: string, amt: number) => {
     return stripe.charges.create({
